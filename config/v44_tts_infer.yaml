@@ -1,0 +1,10 @@
+# LocalTTS v4.4 rewrites this file at startup with the current absolute model path.
+custom:
+  bert_base_path: GPT_SoVITS/pretrained_models/chinese-roberta-wwm-ext-large
+  cnhuhbert_base_path: GPT_SoVITS/pretrained_models/chinese-hubert-base
+  device: cuda
+  is_half: false
+  t2s_weights_path: A:/LocalTTS-AI/voices/mashiro_candidate_v5b/mashiro_candidate_v5b-e1.ckpt
+  version: v2
+  vits_weights_path: models/v44/v44_fourway_sovits.pth
+version: v2

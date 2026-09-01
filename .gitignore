@@ -1,0 +1,6 @@
+bin/
+obj/
+*.log
+*.tmp
+LocalTTS_stability.log
+cache/

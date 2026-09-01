@@ -1,0 +1,405 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<title>LocalTTS ?뚯꽦 ?덉쭏쨌?덉젙??媛쒖꽑 醫낇빀 蹂닿퀬??/title><style>
+@page{size:A4;margin:14mm 13mm 15mm}*{box-sizing:border-box}body{margin:0;color:#182334;font:9.5pt/1.52 "Malgun Gothic",sans-serif}h1{font-size:25pt;color:#102a43}h2{margin:8mm 0 3mm;padding-bottom:2mm;color:#143f68;font-size:16pt;border-bottom:2px solid #3478c7;page-break-after:avoid}h3{margin:5mm 0 2mm;color:#245a8d;font-size:12pt;page-break-after:avoid}p{margin:2mm 0}table{width:100%;margin:3mm 0 5mm;border-collapse:collapse;font-size:8.2pt;page-break-inside:avoid}th,td{padding:2mm;border:1px solid #b9c8d8;vertical-align:top}th{color:#173f69;background:#e9f2fc;text-align:left}tr:nth-child(even) td{background:#f8fafc}ul,ol{margin:2mm 0 3mm 7mm;padding-left:4mm}li{margin:.8mm 0}code{color:#744210;font:8pt Consolas,monospace;overflow-wrap:anywhere}pre{white-space:pre-wrap;background:#f4f7fa;padding:3mm;border-left:4px solid #8194a7}.cover{min-height:258mm;display:flex;flex-direction:column;justify-content:center;page-break-after:always}.subtitle{color:#526d82;font-size:14pt;margin-bottom:14mm}.meta{padding:5mm 7mm;background:#f0f6ff;border-left:5px solid #3478c7}.verdict{display:inline-block;margin:6mm 0;padding:3mm 6mm;color:#075b37;background:#e8f7ef;border:1px solid #62b98c;border-radius:6px;font-size:17pt;font-weight:700}.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:2.5mm;margin:4mm 0 6mm}.kpi div{padding:3mm;border:1px solid #bdd0e2;border-radius:5px;background:#f8fbff}.kpi b{display:block;color:#1766a6;font-size:16pt}.chart{margin:4mm 0 7mm;padding:4mm;border:1px solid #c6d4e2;background:#fbfdff}.barrow{display:grid;grid-template-columns:42mm 1fr 22mm;gap:2mm;align-items:center;margin:2mm 0}.track{height:7mm;background:#e8eef5;border-radius:3px;overflow:hidden}.bar{height:100%;background:#2d9b67}.old{background:#d65b5b}.small{font-size:8pt;color:#60758a}</style></head><body>
+<section class="cover"><h1>LocalTTS<br>?뚯꽦 ?덉쭏쨌?덉젙??媛쒖꽑 醫낇빀 蹂닿퀬??/h1><div class="subtitle">Mashiro 湲곕컲 媛쒕컻遺??4?붿옄 ?낅┰ ?뚯꽦 v4.4源뚯?</div><div class="meta"><p><b>?묒꽦??</b> JW-292</p><p><b>理쒖쥌??</b> LocalTTS v4.4</p><p><b>?묒꽦??</b> 2026-09-01</p><p><b>寃利??먯튃:</b> ?낅┰ 臾몄옣쨌?ㅼ쨷 seed쨌理쒖븙媛뮻룹떆媛꾩텞쨌?뚰삎쨌?먯썝쨌?≪텧 寃쎈줈瑜??④퍡 ?듦낵??蹂寃쎈쭔 梨꾪깮</p></div><div class="verdict">理쒖쥌 ?먯젙: ?ㅼ젣 ?붿쭊 諛??≪텧 ?먯껜 寃???듦낵</div></section>
+<div class="kpi"><div><b>10.61%</b>25臾몄옣 ?됯퇏 CER</div><div><b>0%</b>no-filler CER</div><div><b>0%</b>clipping</div><div><b>6.19ms</b>5.38珥?WAV 蹂댁젙</div></div>
+<div class="chart"><b>v4.3 ??v4.4 ?뚰삎 蹂??/b><div class="barrow"><span>鍮꾩쓬/?먯쓬 鍮?v4.3</span><div class="track"><div class="bar old" style="width:100%"></div></div><span>7.59dB</span></div><div class="barrow"><span>鍮꾩쓬/?먯쓬 鍮?v4.4</span><div class="track"><div class="bar" style="width:78.8%"></div></div><span>5.98dB</span></div><div class="barrow"><span>presence v4.3</span><div class="track"><div class="bar old" style="width:69.8%"></div></div><span>6.342%</span></div><div class="barrow"><span>presence v4.4</span><div class="track"><div class="bar" style="width:100%"></div></div><span>9.080%</span></div></div>
+<p>작성자: <strong>JW-292</strong>  </p>
+<p>최종판: <strong>LocalTTS v4.4</strong>  </p>
+<p>작성일: 2026-09-01</p>
+<h2>1. 최종 결론</h2>
+<p>LocalTTS는 배치 파일과 브라우저 의존형 시제품에서 시작해, WinForms 채팅 입력&#183;PIP,</p>
+<p>본인 모니터링, Discord 마이크 릴레이, GPT-SoVITS 기반 음성, 비정상 출력 차단,</p>
+<p>단일 48kHz float 송출 버스를 갖춘 로컬 앱으로 발전했다.</p>
+<p>최종 v4.4는 v4.3의 4화자 조화 모델과 안정장치를 그대로 보존하면서 저중역 마스킹을</p>
+<p>0.75dB 단위의 미세 파형 보정으로 줄였다. 25문장 ASR 정확도와 시간축은 v4.3과</p>
+<p>동일하게 유지했고, 자음 존재감과 스펙트럼 중심만 개선했다. 모델을 더 크게 만들거나</p>
+<p>추가 신경망을 상주시킨 것이 아니므로 GPU 메모리 증가는 없고, 5.38초 WAV의 CPU</p>
+<p>후처리는 평균 6.19ms였다.</p>
+<p>최종 앱 자체 검사 결과는 다음과 같다.</p>
+<table>
+<tr>
+<th>검사</th>
+<th>결과</th>
+</tr>
+<tr>
+<td>C# Release 빌드</td>
+<td>통과</td>
+</tr>
+<tr>
+<td>기본 Windows TTS/장치 검사</td>
+<td>종료 코드 0</td>
+</tr>
+<tr>
+<td>실제 v4.4 모델 종단 합성</td>
+<td>종료 코드 0</td>
+</tr>
+<tr>
+<td>Discord 오디오 버스 반복 검사</td>
+<td>종료 코드 0</td>
+</tr>
+<tr>
+<td>SoVITS SHA-256</td>
+<td><code>C0C14ECA038F2F232D6AE4BD156EC5EE22718F1785E70D193B0BFB29ACD07736</code></td>
+</tr>
+<tr>
+<td>Reference SHA-256</td>
+<td><code>C26641832A386E8BE4323650A54C399120AACBA500FB539F77AE1E1252028AE7</code></td>
+</tr>
+</table>
+<h2>2. 평가 원칙</h2>
+<p>한두 문장의 인상만으로 운영 모델을 교체하지 않았다. 다음 축을 함께 검사했다.</p>
+<ul>
+<li>발음: Whisper 기반 문자 오류율(CER), 정확 일치 문장, 문장별 최대 오류</li>
+<li>시간: 전체 길이, 내부 장무음, 입력 길이에 비해 비정상적으로 긴 출력</li>
+<li>파형: RMS, near-silence, 급격한 샘플 변화, clipping, spectral centroid</li>
+<li>음색: 750Hz 저중역, 2~4.5kHz 자음 presence, 비음/자음 에너지 비</li>
+<li>안정성: 여러 seed, 반복 합성, 서버 재기동, 장치 재열기</li>
+<li>자원: 모델 크기, Working Set, Private Memory, GPU 메모리, 정상/실패 합성 횟수</li>
+</ul>
+<p>운영 적용 조건은 평균 개선뿐 아니라 문장별 회귀, 없는 감탄사, 반복, 장무음,</p>
+<p>클리핑이 없어야 한다는 보수적 기준이었다.</p>
+<h2>3. 발전 과정과 문제 해결</h2>
+<h3>3.1 실행 구조와 로컬 UI</h3>
+<p>초기 <code>run</code> 배치 파일은 인코딩/경로 문제로 “배치 파일이 아닙니다”와 유사한 오류를</p>
+<p>내고 창이 닫혔다. 실행 폴더를 <code>%~dp0</code>로 고정하고, 빌드 실패 시 창을 유지하며,</p>
+<p>브라우저 대신 WinForms 실행 파일을 만들었다. 채팅을 Enter로 합성하고 접수된 글은</p>
+<p>즉시 지우도록 했으며, PIP는 한 줄 입력만 남기고 X를 누르면 종료 대신 본창으로</p>
+<p>돌아가도록 정리했다. 브라우저 프로세스를 제거해 게임 중 메모리 변동도 줄였다.</p>
+<h3>3.2 본인 청취와 Discord 송출</h3>
+<p>TTS를 가상 케이블에만 보내면 사용자는 합성 여부를 알 수 없었다. 한 번 만든 WAV를</p>
+<p>모니터 장치와 Discord 장치에 동시에 재생하도록 분기했다. 실제 마이크는 Discord</p>
+<p>경로에만 넣어 지연된 자기 목소리가 모니터로 돌아오지 않게 했다.</p>
+<p>초기 송출은 마이크와 각 TTS가 같은 VB-CABLE 장치를 별도 <code>WaveOutEvent</code>로 열어</p>
+<p>경쟁했고, 44.1/48kHz 변환까지 겹쳐 음절 누락이 생겼다. 이를 장치당 하나의 장기 실행</p>
+<p><code>WasapiOut</code> shared-mode 버스로 합치고, 장치 기본값과 같은 48kHz stereo IEEE float로</p>
+<p>통일했다. 정상 endpoint는 발화 후 유지하고 실제 중단 때만 재생성한다. 한 발화가</p>
+<p>끝날 때까지 다음 발화를 막고 Discord gain은 100% 이하로 제한했다.</p>
+<p>첫 발화 뒤 이후 음성이 웅얼거리거나 사라진 문제는 매 문장 endpoint를 닫고 다시 여는</p>
+<p>회귀가 직접 원인이었다. 장기 endpoint 재사용으로 수정한 뒤 비무음 신호 30회,</p>
+<p>동시 입력 8개, 재열기 8회를 통과했다.</p>
+<h3>3.3 Discord Studio에서만 정상인 현상</h3>
+<p>Studio/순수 오디오에서 정상이라는 A/B는 <code>TTS → 앱 → VB-CABLE → Discord 입력</code>까지</p>
+<p>신호가 정상임을 뜻한다. 일반 입력 프로필의 Krisp, echo cancellation, AGC, voice</p>
+<p>activity gate가 깨끗한 디지털 합성음을 비음성으로 오판해 작은 자음과 모음을 제거한</p>
+<p>것이었다. 따라서 가상 케이블 TTS에는 Studio가 자연스러운 운영 설정이다. Studio를</p>
+<p>쓰지 않을 경우 모든 후처리와 자동 감도를 끄고 Standard/Legacy subsystem을 비교한다.</p>
+<h3>3.4 Mashiro 기준 음성의 발음 개선</h3>
+<p>주요 증상은 <code>ㅇ</code> 밀집/연음에서 급하게 삼키는 발음, 띄어쓰기 민감성, 문장에 없는</p>
+<p>“하/아” 삽입, 구간 경계의 지지직이었다. 다음 개선이 운영 경로에 남았다.</p>
+<table>
+<tr>
+<th>문제</th>
+<th>데이터 분석</th>
+<th>채택 해결</th>
+</tr>
+<tr>
+<td>띄어쓰기</td>
+<td>잘못 분리된 조사에서 phoneme 경계 변화</td>
+<td>Unicode/공백 정규화와 명백한 조사만 결합</td>
+</tr>
+<tr>
+<td>급발음</td>
+<td>입력 대비 길이가 짧은 표본과 ㅇ/연음 문장</td>
+<td>기본 속도 0.94, 짧은 결과 품질 검사</td>
+</tr>
+<tr>
+<td>없는 감탄사/반복</td>
+<td>높은 무작위성과 특정 seed에서 의미 토큰 폭주</td>
+<td>낮은 randomness, 정상 seed와 제한된 fallback</td>
+</tr>
+<tr>
+<td>긴 문장 특정 구간 붕괴</td>
+<td>전체 재합성보다 구간별 실패가 관찰됨</td>
+<td>긴 문장만 문장부호/단어 경계로 분할</td>
+</tr>
+<tr>
+<td>경계 지지직</td>
+<td>결합점과 고립 샘플 jump 검출</td>
+<td>12ms fade, 18ms 간격, micro-declick</td>
+</tr>
+<tr>
+<td>엔진 비정상 종료</td>
+<td>서버/캐시/포트 상태 로그</td>
+<td>자산 사전검사, 300초, 2회 기동, 1회 자동 복구</td>
+</tr>
+</table>
+<p>출력 micro-declick은 기존 WAV 46개에서 클릭 검출을 73→63으로 줄였고, 실제 수리된</p>
+<p>5파일의 CER은 8.18%로 동일했다. C# 구현은 파일당 2~4샘플만 바꾸고 첫 JIT 이후</p>
+<p>약 4.2~5.2ms가 걸려 추가 RAM/VRAM 없이 채택됐다.</p>
+<h3>3.5 학습 데이터와 부분 미세학습</h3>
+<p>세 유튜브 영상 약 4.55시간에서 2,216개 구간을 만들고, Whisper-small 대조 CER 18%</p>
+<p>이하 785개(40.61분)를 선별했다. 사용자가 30개 자막을 직접 검수했으며 유효 28개를</p>
+<p>3회 노출해 839행 학습 구성을 만들었다.</p>
+<table>
+<tr>
+<th>후보</th>
+<th>방법</th>
+<th>결과</th>
+<th>판정</th>
+</tr>
+<tr>
+<td>candidate v3</td>
+<td>2,216개, 번들 학습률</td>
+<td>CER 18.86~20.28%, 기준 7.02%</td>
+<td>탈락</td>
+</tr>
+<tr>
+<td>v3c</td>
+<td>785개, 저학습률</td>
+<td>1회 476.16% 반복 붕괴, 2회 25.52%</td>
+<td>탈락</td>
+</tr>
+<tr>
+<td>v4</td>
+<td>GPT 마지막 2층, 8.12% 파라미터</td>
+<td>10.80→11.26%, <code>ㅇ</code> 악화</td>
+<td>탈락</td>
+</tr>
+<tr>
+<td>v5</td>
+<td>마지막 1층, 4.06%</td>
+<td>대부분 기준과 동일</td>
+<td>보류</td>
+</tr>
+<tr>
+<td>v5b</td>
+<td>마지막 1층, 교정자료 강화</td>
+<td>23문장 8.34→8.11%, 최대 26.32→21.05%</td>
+<td>안정 컨트롤러로 채택</td>
+</tr>
+<tr>
+<td>v8</td>
+<td>마지막 4층+head, 13.1M/77.6M</td>
+<td>고정 seed 10.19→10.02%지만 5-seed 11.70→93.48%</td>
+<td>폐기</td>
+</tr>
+</table>
+<p>핵심 교훈은 작은 고정-seed 개선이 일반화 개선을 의미하지 않는다는 것이다. v8은 한</p>
+<p>조건에서는 좋아 보였으나 seed를 넓히자 반복 발성이 폭증했다. 따라서 이후 실험은</p>
+<p>짧은 선별 → 독립 문장 → 다중 seed 순으로 중단 기준을 두었다.</p>
+<h3>3.6 Reference, G2P, seed 실험</h3>
+<p>Full reference는 일부 문장을 개선했지만 64.06초 출력과 94.6% 무음을 만들었다.</p>
+<p>원본 reference의 68샘플만 보간한 micro-declick도 독립 9문장에서 CER 4.38→4.06%였지만</p>
+<p>5문장&#215;5 seed에서 양쪽 6.63%, 클릭 46으로 동률이라 미적용했다.</p>
+<p>선택적 G2P는 21문장 중 실제 phoneme가 바뀐 2문장만 소폭 변화했으나, 검수 자료</p>
+<p>785개에서 차이가 난 7개를 확대 평가하자 평균 CER이 15.24→25.02%로 악화했다.</p>
+<p>고정 seed 404도 첫 세트에서는 12.83→8.08%였지만 독립 세트에서 4.38→8.77%로</p>
+<p>뒤집혔다. reference/G2P/seed는 국소 이득이 반복 검증되지 않아 운영 경로에서 제외했다.</p>
+<h2>4. 독립 4화자 모델 v4.2~v4.4</h2>
+<h3>4.1 v4.2: 화자 조화</h3>
+<p>Mashiro를 완전히 배제한 초기 독립 음성은 개성이 약하거나 코먹은 음색이 두드러졌다.</p>
+<p>화자별 학습량 차이를 없애기 위해 체크포인트 단순 평균 대신 모듈별 task vector를</p>
+<p>정규화했다. 25/25/25/25, 40/20/20/20, Mashiro 50/55%를 비교해</p>
+<p>Mashiro/Riko/Tabi/Uni = 40/20/20/20을 선택했다.</p>
+<table>
+<tr>
+<th>v4.2 후보</th>
+<th>평균 CER</th>
+<th>최대 CER</th>
+<th>no-filler</th>
+</tr>
+<tr>
+<td>이전 v4.1, 0/20/50/30</td>
+<td>7.15%</td>
+<td>31.58%</td>
+<td>시간축 실패</td>
+</tr>
+<tr>
+<td>균등 25/25/25/25</td>
+<td>7.00%</td>
+<td>30.43%</td>
+<td>0%</td>
+</tr>
+<tr>
+<td><strong>선택 40/20/20/20</strong></td>
+<td><strong>4.88%</strong></td>
+<td><strong>21.74%</strong></td>
+<td><strong>0%</strong></td>
+</tr>
+<tr>
+<td>Mashiro 50%</td>
+<td>7.25%</td>
+<td>26.09%</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>Mashiro 55%</td>
+<td>7.05%</td>
+<td>26.32%</td>
+<td>0%</td>
+</tr>
+</table>
+<p><code>no_filler</code>의 “아~~~”와 1.24초 내부 공백은 SoVITS보다 GPT 의미 토큰 문제였다.</p>
+<p>v5b GPT, seed 24680, top-k 3을 적용해 7.00초 출력을 3.16초로, 최장 내부 공백을</p>
+<p>0.06초로 줄이고 ASR 정확 일치를 얻었다. top-k 1~2는 오히려 “아/으” 반복을 만들었다.</p>
+<h3>4.2 v4.3: 재생 전 폭주 차단</h3>
+<p>8문장에서는 안전했던 seed 24680이 25문장 확장 시 한 문장에서 47.04초 반복과 CER</p>
+<p>100%를 만들었다. 완성 WAV를 재생 전에 버퍼링하고 <code>max(6.5초, 글자 수&#215;0.30초)</code>를</p>
+<p>넘으면 폐기한 뒤 seed 101로 단 한 번 재합성했다.</p>
+<table>
+<tr>
+<th>지표</th>
+<th>v4.2</th>
+<th>v4.3</th>
+</tr>
+<tr>
+<td>25문장 평균 CER</td>
+<td>14.19%</td>
+<td><strong>10.61%</strong></td>
+</tr>
+<tr>
+<td>최대 CER</td>
+<td>100%</td>
+<td><strong>33.33%</strong></td>
+</tr>
+<tr>
+<td>최대 출력 길이</td>
+<td>47.04초</td>
+<td><strong>7.20초</strong></td>
+</tr>
+<tr>
+<td>정확 일치</td>
+<td>8/25</td>
+<td>8/25</td>
+</tr>
+<tr>
+<td>no-filler / clipping</td>
+<td>0% / 0%</td>
+<td>0% / 0%</td>
+</tr>
+</table>
+<p>정상 문장은 합성 1회로 자원 사용이 같고 실패할 때만 최대 1회 추가한다. 모델 적재 후</p>
+<p>측정값은 Working Set 약 1,604.8MB, Private Memory 약 3,291.9MB, 전체 GPU 메모리</p>
+<p>약 1,167/6,144MB였으며, 버퍼 WAV는 약 0.2~0.25MB였다.</p>
+<h3>4.3 v4.4: 파형 기반 비음 마스킹 감소</h3>
+<p>다른 task-vector 비율은 전체 CER을 9.64%까지 낮춘 경우도 있었지만 연음과 <code>ㅇ</code> 문장을</p>
+<p>악화시키거나 없는 “하”를 재발시켰다. 모델 비율을 바꾸지 않고 완성 파형에 다음의</p>
+<p>미세 보정만 적용했다.</p>
+<ul>
+<li>750Hz, Q 0.8, -0.75dB: 답답한 저중역 공명 완화</li>
+<li>2,800Hz, Q 0.8, +0.75dB: 자음 윤곽 복원</li>
+<li>양방향 zero-phase biquad와 peak 0.95 안전 상한</li>
+</ul>
+<table>
+<tr>
+<th>파형 지표</th>
+<th>v4.3</th>
+<th>v4.4</th>
+<th>변화</th>
+</tr>
+<tr>
+<td>spectral centroid</td>
+<td>878.30Hz</td>
+<td>964.92Hz</td>
+<td>+9.9%</td>
+</tr>
+<tr>
+<td>비음/자음 에너지 비</td>
+<td>7.59dB</td>
+<td>5.98dB</td>
+<td>-1.61dB</td>
+</tr>
+<tr>
+<td>2~4.5kHz presence</td>
+<td>6.342%</td>
+<td>9.080%</td>
+<td>+2.738%p</td>
+</tr>
+<tr>
+<td>clipping</td>
+<td>0%</td>
+<td>0%</td>
+<td>동일</td>
+</tr>
+<tr>
+<td>25문장 평균/최대 CER</td>
+<td>10.61/33.33%</td>
+<td>10.61/33.33%</td>
+<td>동일</td>
+</tr>
+</table>
+<p>&#177;1.5~2.5dB의 강한 EQ는 밝고 얇아지며 일부 ASR/no-filler를 악화시켜 폐기했다.</p>
+<p>v4.4는 생성 음소와 타이밍은 바꾸지 않고 마스킹만 줄인 안전한 최종점이다.</p>
+<h2>5. 자원과 게임 병행 관점</h2>
+<p>모델 추론 부하는 앱이 처음 음성을 부를 때만이 아니라 <strong>채팅을 입력해 합성할 때마다</strong></p>
+<p>발생한다. 다만 모델은 첫 호출 후 메모리에 유지되므로 매 문장 재로딩은 하지 않는다.</p>
+<p>대기 중 앱 UI는 가볍지만 엔진의 RAM/VRAM은 상주한다. Python은 <code>BelowNormal</code> 우선순위로</p>
+<p>실행해 게임 스레드 우선권을 보존한다.</p>
+<p>SSD와 HDD에 페이지 파일을 동시에 둘 수 있지만, 페이지 파일은 느린 RAM 대체이며</p>
+<p>GPU VRAM 부족이나 전원/온도 문제를 해결하지 않는다. 게임이 전체 자원을 80~90%</p>
+<p>사용한다면 합성 순간 frame-time spike가 생길 수 있다. 안전 운영은 SSD 페이지 파일을</p>
+<p>시스템 관리로 유지하고, VS Code/브라우저를 닫고, 게임 VRAM 여유를 약 1.2GB 이상</p>
+<p>확보하며, TTS 문장을 연속으로 겹치지 않는 것이다. 자동 재부팅은 보통 단순 CPU 100%</p>
+<p>보다 전원&#183;온도&#183;드라이버&#183;메모리 불안정 가능성을 먼저 점검한다.</p>
+<h2>6. 적용하지 않은 주요 방법</h2>
+<table>
+<tr>
+<th>방법</th>
+<th>탈락 이유</th>
+</tr>
+<tr>
+<td>저자원 모드 매회 unload</td>
+<td>실행 대기가 길고 재로딩 비용이 더 큼</td>
+</tr>
+<tr>
+<td>무조건 고품질/강한 후처리</td>
+<td>음색&#183;자연스러움 저하, 자원 증가</td>
+</tr>
+<tr>
+<td>Full reference/multi-reference</td>
+<td>장무음&#183;폭주&#183;자음 presence 저하</td>
+</tr>
+<tr>
+<td>전체/선택 G2P</td>
+<td>확대 세트 CER 악화</td>
+</tr>
+<tr>
+<td>강한 EQ/denoise</td>
+<td>발음 단서와 자연스러움 손실</td>
+</tr>
+<tr>
+<td>v8 부분 파인튜닝</td>
+<td>다중 seed에서 반복 붕괴</td>
+</tr>
+<tr>
+<td>공격적 속도 저하</td>
+<td>일부 CER 개선과 다른 문장/클릭 회귀 동반</td>
+</tr>
+<tr>
+<td>로컬 rush detector</td>
+<td>민감도 30.3%, balanced accuracy 61.7%</td>
+</tr>
+<tr>
+<td>RMS/ZCR 반복 detector 단독</td>
+<td>Whisper 환각과 실제 반복을 혼동할 오탐 위험</td>
+</tr>
+</table>
+<h2>7. 최종 앱의 안전 설계</h2>
+<ul>
+<li>기존 <code>LocalTTS.exe</code>와 모델은 덮어쓰지 않는 별도 <code>LocalTTS_v4.4.exe</code></li>
+<li>별도 mutex와 API 포트 9884로 구버전 충돌 방지</li>
+<li>모델&#183;reference SHA-256 고정 및 시작 전 존재/크기 검사</li>
+<li>앱 내부 전용 YAML을 매 기동 현재 설치 경로로 생성해 공용 설정 오염 방지</li>
+<li>앱 옆 <code>cache/numba</code>를 사용해 AppData ACL/임시파일 재시도 문제 방지</li>
+<li>Python stdout/stderr를 안정성 로그에 기록해 갑작스런 실패 원인 보존</li>
+<li>서버 300초 준비창, 2회 기동, 합성 중 소실 시 동일 시도 1회 복구</li>
+<li>정상 WASAPI endpoint 유지, 장애 때만 재생성</li>
+<li>한 발화씩 순차 처리, 출력 gain 100% 상한</li>
+</ul>
+<h2>8. 최종 운영 절차</h2>
+<ol>
+<li><code>run_v44.bat</code>을 실행한다.</li>
+<li>Discord 출력은 <code>CABLE Input</code>, 모니터 출력은 실제 헤드폰/스피커로 둔다.</li>
+<li>Discord 입력은 <code>CABLE Output</code>, 입력 프로필은 Studio/순수 오디오로 둔다.</li>
+<li>첫 문장은 엔진 준비 때문에 더 오래 걸릴 수 있다.</li>
+<li>이후 PIP에서 Enter로 한 문장씩 보낸다.</li>
+<li>문제가 생기면 <code>LocalTTS_stability.log</code>와 세 자체 검사 종료 코드를 확인한다.</li>
+</ol>
+<h2>9. 최종 판정</h2>
+<p>v4.4는 새로운 대형 모델이나 과도한 후처리 대신, 검증된 4화자 음색층&#183;v5b 운율</p>
+<p>컨트롤러&#183;1회 폭주 복구&#183;미세 파형 보정을 결합했다. 발음 CER와 no-filler 안정성을</p>
+<p>희생하지 않고 코먹은 저중역 마스킹을 줄였으며, 현재 PC에서 실제 엔진 종단 합성과</p>
+<p>Discord 버스 반복 검사를 통과했다. 따라서 이 폴더의 <code>LocalTTS_v4.4.exe</code>를 최종</p>
+<p>독립 실행판으로 판정한다.</p>
+<p class="small">蹂?臾몄꽌???묒꽦???쒓린??JW-292 ??紐낆씠硫?怨듬룞 ?묒꽦???쒓린瑜??ы븿?섏? ?딅뒗??</p></body></html>

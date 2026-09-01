@@ -1,0 +1,14 @@
+/.gitattributes text eol=lf
+*.exe binary
+*.dll binary
+*.pth binary
+*.wav binary
+*.png binary
+*.pdf binary
+*.bat text eol=crlf
+*.cs text eol=crlf
+*.md text eol=lf
+*.html text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.sha256 text eol=lf

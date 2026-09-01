@@ -1,0 +1,56 @@
+{
+  "version": "independent-v4.4-wave-balanced",
+  "status": "selected",
+  "architecture": "GPT-SoVITS v2 with buffered runaway guard and micro waveform balance",
+  "voice_task_weights": {
+    "mashiro": 0.4,
+    "riko": 0.2,
+    "tabi": 0.2,
+    "uni": 0.2
+  },
+  "gpt_model": "A:/LocalTTS-AI/voices/mashiro_candidate_v5b/mashiro_candidate_v5b-e1.ckpt",
+  "sovits_model": "v44_fourway_sovits.pth",
+  "sovits_sha256": "c0c14eca038f2f232d6ae4bd156ec5ee22718f1785e70d193b0bfb29acd07736",
+  "reference_audio": "ref_v44_fourway.wav",
+  "reference_sha256": "c26641832a386e8be4323650a54c399120aacba500fb539f77ae1e1252028ae7",
+  "inference": {
+    "text_split_method": "cut0",
+    "top_k": 3,
+    "top_p": 0.68,
+    "temperature": 0.52,
+    "repetition_penalty": 1.28,
+    "speed_factor": 0.94,
+    "seed": 24680
+  },
+  "runaway_guard": {
+    "buffer_before_playback": true,
+    "seconds_per_character": 0.3,
+    "minimum_limit_sec": 6.5,
+    "fallback_seed": 101,
+    "maximum_retries": 1
+  },
+  "wave_balance": {
+    "method": "zero-phase parametric biquad on buffered WAV",
+    "filters": [
+      {"type": "bell", "frequency_hz": 750, "q": 0.8, "gain_db": -0.75},
+      {"type": "bell", "frequency_hz": 2800, "q": 0.8, "gain_db": 0.75}
+    ],
+    "peak_ceiling": 0.95
+  },
+  "validation": {
+    "sentences": 25,
+    "mean_cer_before": 0.1061,
+    "mean_cer_after": 0.1061,
+    "max_cer_before": 0.3333,
+    "max_cer_after": 0.3333,
+    "no_filler_cer": 0.0,
+    "spectral_centroid_hz_before": 878.3,
+    "spectral_centroid_hz_after": 964.92,
+    "nasal_to_articulation_db_before": 7.59,
+    "nasal_to_articulation_db_after": 5.98,
+    "presence_ratio_pct_before": 6.342,
+    "presence_ratio_pct_after": 9.08,
+    "clipping_pct": 0.0
+  },
+  "selection_note": "The four-way acoustic blend remains unchanged because alternate task-vector blends improved some consonants but regressed liaison or vowel-heavy sentences. The selected micro waveform correction reduces low-mid masking without changing generated phones or timing."
+}
